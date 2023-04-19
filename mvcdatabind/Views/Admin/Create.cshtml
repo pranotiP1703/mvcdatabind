@@ -1,0 +1,291 @@
+﻿@model mvcdatabind.user
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+
+
+{
+    <head>
+        @Html.AntiForgeryToken()
+
+
+        <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $("#country").change(function () {
+                    var id = $(this).val();
+                    $("#State").empty();
+                    $.get("/Admin/Getstate", { countryid: id }, function (data) {
+                        var v = "<option>---select---</option>";
+                        $.each(data, function (i, v1) {
+                            v += "<option value=" + v1.Value + ">" + v1.Text + "</option>";
+
+                        });
+                        $("#State").html(v);
+                    });
+                });
+                $("#State").change(function () {
+                    var id = $(this).val();
+                    $("#city").empty();
+                    $.get("../Admin/Getcity", { stateid: id }, function (data) {
+                        var v = "<option>---select---</option>";
+                        $.each(data, function (i, v1) {
+                            v += "<option value=" + v1.Value + ">" + v1.Text + "</option>";
+
+                        });
+                        $("#city").html(v);
+                    });
+                });
+            });
+        </script>
+
+
+        <script>
+            $(function () {
+
+                $('body').on('click', 'a.modal-link', function (e) {
+
+                    e.preventDefault();
+
+                    $("#modal").remove();
+
+                    // Get the Details action URL
+                    var url = $(this).attr("href");
+
+                    //Make the Ajax call and render modal when response is available
+                    $.get(url, function (data) {
+                        $(data).modal();
+                    });
+                });
+
+            });
+    </script>
+
+
+    </head>
+     
+
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <div class="form-horizontal">
+        <h4>user</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.id1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.id1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.id1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.name1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.name1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.name1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.address1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.address1, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.address1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.RadioButton("Gender", "Male") Male
+                @Html.RadioButton("Gender", "female") FeMale
+
+
+
+                @*@Html.EditorFor(model => model.gender, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.LabelFor(model => model.country, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+
+
+                @Html.DropDownList("country", null, "---select country---")
+                @*@Html.EditorFor(model => model.country, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.country, "", new { @class = "text-danger" })
+
+
+        </div>
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.state, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="State" name="State"> ---Select---</select>
+
+                @*@Html.EditorFor(model => model.state, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.state, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.city, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select id="city" name="city"> ---select---</select>
+
+
+                @Html.ValidationMessageFor(model => model.city, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.phoneno, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.phoneno, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.phoneno, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Clear" class="btn btn-default" />
+            </div>
+        </div>
+
+
+    </div>
+}
+
+
+<h2>ListView</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="myTable">
+    <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gender)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.state)
+            </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phoneno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.countryid)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stateid)
+            </th>*@
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.listuser)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.name1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.address1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.gender)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.state)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.city)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.phoneno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.email)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.countryid)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.stateid)
+                </td>*@
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id1 = item.id1 }) |
+                @Html.ActionLink("Details", "Details", new { id1 = item.id1 }, new { @class = "btn modal-link" }) |
+                @Html.ActionLink("Delete", "deletedata", new { id1 = item.id1 }) |
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable(
+            {
+                dom: 'Bfrtip',
+                SVGFEColorMatrixElement: 'hfujfu',
+                button: [
+                    'copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5'
+                ]
+            }
+        );
+    });
+</script>
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+                       

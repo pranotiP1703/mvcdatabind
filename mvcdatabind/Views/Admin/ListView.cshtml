@@ -1,0 +1,93 @@
+﻿@model mvcdatabind.user
+
+@{
+    ViewBag.Title = "ListView";
+}
+
+<h2>ListView</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.id1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.name1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.address1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.gender)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.country)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.city)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.phoneno)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.email)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.countryid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.stateid)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.listuser) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.id1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.name1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.address1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.gender)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.country)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.city)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.phoneno)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.countryid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.stateid)
+        </td>*@
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id1 = item.id1 }) |
+        @Html.ActionLink("Details", "Details", new { id1 = item.id1 }) |
+        @Html.ActionLink("Delete", "Delete", new { id1 = item.id1 }) |
+    </td>
+    </tr>
+}
+
+</table>
